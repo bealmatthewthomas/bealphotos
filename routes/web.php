@@ -13,6 +13,4 @@
 
 Route::get('/', 'HomepageController@index');
 
-Route::get('/photos', 'PhotosController@index');
-
 Route::get('test', 'S3TestController@index');
