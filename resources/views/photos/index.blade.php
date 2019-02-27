@@ -14,7 +14,7 @@
    <h1>Photos</h1>
     @foreach($photos as $photo)
         <p>{{$photo->title}}</p>
-        <p><img src="{{$photo->url}}"></p>
+        <p><img src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
         <p>{{$photo->description}}</p>
     @endforeach
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class PhotosController
@@ -34,9 +35,20 @@ class PhotosController extends Controller
 
     public function store(Request $request)
     {
-        // Create temp file
-        $file = $request->file('photos.image');
-        dd($file);
+        //if request has file ( todo replace this with validation)
+        if($request->hasFile('photo.file')) {
+            $image = $request->file('photo.file');
+        }
+        else{
+            redirect()
+                ->back();
+        }
+        $photo = new Photo($request->input('photo'));
+        
+        $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
+        $photo->setAttribute('url', $storagePath);
+        $photo->save();
 
+        return redirect(route('photos_index'));
     }
 }
