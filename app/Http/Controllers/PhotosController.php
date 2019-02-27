@@ -33,6 +33,11 @@ class PhotosController extends Controller
         return view('photos.create');
     }
 
+    /**
+     * @author mattbeal
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(Request $request)
     {
         //if request has file ( todo replace this with validation)
@@ -44,7 +49,7 @@ class PhotosController extends Controller
                 ->back();
         }
         $photo = new Photo($request->input('photo'));
-        
+
         $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
         $photo->setAttribute('url', $storagePath);
         $photo->save();
