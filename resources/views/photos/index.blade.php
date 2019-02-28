@@ -14,9 +14,10 @@
                     <div class="flex-center position-ref full-height">
                         <h1>Photos</h1>
                         @foreach($photos as $photo)
-                            <p>{{$photo->title}}</p>
-                            <p><img src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
+                            <h3>{{$photo->title}}</h3>
+                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
                             <p>{{$photo->description}}</p>
+                            <hr>
                         @endforeach
                     </div>
                 </div>

@@ -10,6 +10,7 @@ Route::get('/photos', 'PhotosController@index')
     ->name('photos_index');
 
 Route::get('/photo/create', 'PhotosController@create')
+    ->middleware('auth')
     ->name('photo_create');
 
 Route::post('/photo/create', 'PhotosController@store')
