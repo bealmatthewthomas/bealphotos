@@ -15,3 +15,14 @@ Route::get('/photo/create', 'PhotosController@create')
 
 Route::post('/photo/create', 'PhotosController@store')
     ->name('photo_store');
+
+Route::get('/photo/view/{photo_id}', 'PhotosController@view')
+    ->name('photo_view');
+
+Route::post('photo/edit', 'PhotosController@edit')
+    ->middleware('auth')
+    ->name('photo_edit');
+
+Route::post('photo/delete/{photo_id}', 'PhotosController@delete')
+    ->middleware('auth')
+    ->name('photo_delete');
