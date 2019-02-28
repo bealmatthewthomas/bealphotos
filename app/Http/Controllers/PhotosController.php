@@ -60,7 +60,7 @@ class PhotosController extends Controller
         }
         $photo = new Photo($request->input('photo'));
 
-        $storagePath = Storage::disk('s3')->put("photos", $photo, 'public');
+        $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
         $photo->setAttribute('url', $storagePath);
         $photo->save();
 
