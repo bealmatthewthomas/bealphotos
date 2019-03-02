@@ -5,18 +5,30 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <div>
+                        @if(!empty($errors->first()))
+                            <div class="row col-lg-12">
+                                <div class="alert alert-danger">
+                                    <span>{{ $errors->first() }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                     <form action="{{route('photo_store')}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <label for="photo[title]">Title</label>
-                        <input type="text" id="photo[title]" name="photo[title]">
-
+                        <input class ='form-control' type="text" id="photo[title]" name="photo[title]" value ='{{old('photo.title')}}' required>
+                        <br>
                         <label for="photo[description]">Description</label>
-                        <input type="text" id="photo[description]" name="photo[description]">
+                        <textarea type="text" class="form-control" id="photo[description]" name="photo[description]" required>{{old('photo.description')}}</textarea>
+                        <br>
 
-                        <label for="photo[file]">Photo</label>
-                        <input type="file" id="photo[file]" name="photo[file]">
-
-                        <button type="submit">Submit</button>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="photo[file]" name="photo[file]">
+                            <label class="custom-file-label" for="photo[file]">Choose photo</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
 use App\UserPhoto;
@@ -51,19 +52,16 @@ class PhotosController extends Controller
 
     /**
      * @author mattbeal
-     * @param Request $request
+     * @param StorePhoto $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(StorePhoto $request)
     {
-        //if request has file ( todo replace this with validation)
-        if($request->hasFile('photo.file')) {
-            $image = $request->file('photo.file');
-        }
-        else{
-            redirect()
-                ->back();
-        }
+        $validated = $request->validated();
+
+        //get file
+        $image = $request->file('photo.file');
+
         //create new photo with photo input
         $photo = new Photo($request->input('photo'));
 
