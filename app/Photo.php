@@ -9,4 +9,8 @@ class Photo extends Model
     //
     protected $fillable = array('title', 'description');
 
+    public function user()
+    {
+        return $this->hasOne('App\User');
+    }
 }
