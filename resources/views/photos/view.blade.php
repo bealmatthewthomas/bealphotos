@@ -16,7 +16,7 @@
                             @if($viewdata['policies']['photo']->delete($viewdata['models']['user'],$viewdata['models']['photo']))
                                 <form action="{{ route('photo_delete', ['photo_id' => $viewdata['models']['photo']->id]) }}" method="POST" onsubmit="return confirm('Delete photo: {{ $viewdata['models']['photo']->name }}?');">
                                     @csrf
-                                    <input type="submit" value="Delete">
+                                    <input class = 'btn btn-danger' type="submit" value="Delete">
                                 </form>
                             @endif
                         @endif
