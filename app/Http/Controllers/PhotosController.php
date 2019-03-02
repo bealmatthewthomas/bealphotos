@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\Policies\PhotoPolicy;
+use App\UserPhoto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +26,16 @@ class PhotosController extends Controller
         //
         $photos = Photo::all();
         $user = Auth::user();
+        $photo_policy = new PhotoPolicy();
 
         $viewdata = [
             'models' => [
                 'user' => $user,
                 'photos' => $photos,
-            ]
+            ],
+            'policies' => [
+                'photo' => $photo_policy,
+            ],
         ];
         return view('photos.index', ['viewdata' => $viewdata]);
     }
@@ -58,11 +64,18 @@ class PhotosController extends Controller
             redirect()
                 ->back();
         }
+        //create new photo with photo input
         $photo = new Photo($request->input('photo'));
+
+        //get logged in user
+        $user = Auth::user();
+
+        $photo->user_id = $user->id;
 
         $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
         $photo->setAttribute('url', $storagePath);
         $photo->save();
+
 
         return redirect(route('photos_index'));
     }
@@ -76,7 +89,19 @@ class PhotosController extends Controller
     {
         //find photo by id and return
         $photo = Photo::find($photo_id);
-        return view('photos.view', ['photo' => $photo]);
+        $user = Auth::user();
+        $photo_policy = new PhotoPolicy();
+
+        $viewdata = [
+            'models' => [
+                'user' => $user,
+                'photo' => $photo,
+            ],
+            'policies' => [
+                'photo' => $photo_policy,
+            ],
+        ];
+        return view('photos.view', ['viewdata' => $viewdata]);
     }
 
     /**
@@ -89,6 +114,13 @@ class PhotosController extends Controller
     {
         /** @var Photo $photo */
         $photo = Photo::find($photo_id);
+        $user = Auth::user();
+
+        $photo_policy = new PhotoPolicy();
+        if(!$photo_policy->delete($user,$photo)) {
+            return redirect(route('photos_index'))
+                ->with('message', 'You do not have permission to delete.');
+        }
 
         //first delete from s3, then remove from db
         //
