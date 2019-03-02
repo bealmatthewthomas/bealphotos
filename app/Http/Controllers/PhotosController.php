@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\UserPhoto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,11 +59,22 @@ class PhotosController extends Controller
             redirect()
                 ->back();
         }
+        //create new photo with photo input
         $photo = new Photo($request->input('photo'));
+
+        //get logged in user
+        $user = Auth::user();
 
         $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
         $photo->setAttribute('url', $storagePath);
         $photo->save();
+
+        //create user_photo based on above
+        //
+        $user_photo = new UserPhoto();
+        $user_photo->user_id = $user->id;
+        $user_photo->photo_id = $photo->id;
+        $user_photo->save();
 
         return redirect(route('photos_index'));
     }
