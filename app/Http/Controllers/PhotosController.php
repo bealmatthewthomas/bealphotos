@@ -57,13 +57,14 @@ class PhotosController extends Controller
             $vacations = Vacation::all();
         }
         $viewdata['models']['vacations'] = $vacations;
-        return view('photos.create', ['viewdata' => $vacations]);
+        return view('photos.create', ['viewdata' => $viewdata]);
     }
 
     /**
      * @author mattbeal
      * @param StorePhoto $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function store(StorePhoto $request)
     {
@@ -80,12 +81,19 @@ class PhotosController extends Controller
 
         $photo->user_id = $user->id;
 
-        $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
-        $photo->setAttribute('url', $storagePath);
-        $photo->save();
+        //wrap this in transaciton so we dont end up with lost photos on s3
+        try{
+            $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
+            $photo->setAttribute('url', $storagePath);
+            $photo->save();
+        }
+        catch(\Exception $e) {
+            Storage::disk('s3')->delete($photo->storagePath);
+            dd($e);
+            throw $e;
+        }
 
-
-        return redirect(route('photos_index'));
+        return redirect(route('vacation_view', ['vacation_id' => $photo->vacation_id]));
     }
 
     /**

@@ -9,8 +9,8 @@
                         <h1 class="text-center">{{$viewdata['models']['vacation']->title}}</h1>
                         <p>{{$viewdata['models']['vacation']->description}}</p>
                         <a href="{{route('photo_create', ['vacation_id' => $viewdata['models']['vacation']->id])}}">Add a Photo</a>
-                        @foreach($viewdata['models']['vacation']->photos() as $photo)
-                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealvacations/{{$photo->url}}"></p>
+                        @foreach($viewdata['models']['vacation']->photos()->get() as $photo)
+                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
                         @endforeach
                         <hr>
                     </div>

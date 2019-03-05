@@ -30,10 +30,10 @@
                         </div>
                         <br>
 
-                        <label for="photo[vacation]">Vacation</label>
-                        <select id="photo[vacation]">
+                        <label for="photo[vacation_id]">Vacation</label>
+                        <select class="form-control" id="photo[vacation_id]" name="photo[vacation_id]">
                             @foreach($viewdata['models']['vacations'] as $vacation)
-                                <option value ='{{$vacation->id}}'>{{$vacation->title}}</option>
+                                <option value ='{{$vacation->id}}' selected>{{$vacation->title}}</option>
                             @endforeach
                         </select>
                         <br>

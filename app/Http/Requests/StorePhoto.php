@@ -18,6 +18,7 @@ class StorePhoto extends FormRequest
             'photo.title' => 'required|string|max:30',
             'photo.description' => 'required|string|max:255',
             'photo.file' => 'required|image',
+            'photo.vacation_id' => 'required|int',
         ];
     }
 }

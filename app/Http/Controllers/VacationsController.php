@@ -36,7 +36,6 @@ class VacationsController extends Controller
     public function view(int $vacation_id)
     {
         $vacation = Vacation::find($vacation_id);
-
         $viewdata['models']['vacation'] = $vacation;
 
         return view('vacations.view', ['viewdata' => $viewdata]);
