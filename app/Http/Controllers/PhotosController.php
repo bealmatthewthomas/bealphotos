@@ -6,6 +6,7 @@ use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
 use App\UserPhoto;
+use App\Vacation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,9 +46,18 @@ class PhotosController extends Controller
      * @author mattbeal
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(int $vacation_id = null)
     {
-        return view('photos.create');
+        //get vacation passed in or get all vacations
+        //
+        if(!empty($vacation_id)) {
+            $vacations = Vacation::find($vacation_id);
+        }
+        else {
+            $vacations = Vacation::all();
+        }
+        $viewdata['models']['vacations'] = $vacations;
+        return view('photos.create', ['viewdata' => $vacations]);
     }
 
     /**

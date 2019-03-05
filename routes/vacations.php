@@ -7,9 +7,9 @@ Route::get('vacation/view/{vacation_id}', 'VacationsController@view')
 
 Route::get('vacation/create', 'VacationsController@create')
     ->middleware('auth')
-    ->name('vacation_show');
+    ->name('vacation_create');
 
-Route::post('vacation/create', 'VacationsController@store')
+Route::post('vacation/store', 'VacationsController@store')
     ->middleware('auth')
     ->name('vacation_store');
 

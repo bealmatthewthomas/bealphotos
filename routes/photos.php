@@ -13,7 +13,7 @@ Route::get('/photo/create', 'PhotosController@create')
     ->middleware('auth')
     ->name('photo_create');
 
-Route::post('/photo/create', 'PhotosController@store')
+Route::post('/photo/create/{vacation_id?}', 'PhotosController@store')
     ->name('photo_store');
 
 Route::get('/photo/view/{photo_id}', 'PhotosController@view')

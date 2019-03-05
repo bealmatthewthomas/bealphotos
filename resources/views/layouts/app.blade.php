@@ -36,6 +36,7 @@
                         <li><a href="{{route('welcome')}}">BealPhotos</a></li>
                         <li><a href="{{route('photos_index')}}">View All Photos</a></li>
                         <li><a href="{{route('photo_create')}}">Create New Photo</a></li>
+                        <li><a href="{{route('vacation_create')}}">Create New Vacation</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
