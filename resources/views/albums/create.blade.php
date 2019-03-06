@@ -14,20 +14,16 @@
                             </div>
                         @endif
                     </div>
-                    <form action="{{route('photo_store')}}" method="POST"  enctype="multipart/form-data">
+                    <h2 class="text-center">Create Form</h2>
+                    <form action="{{route('album_store')}}" method="POST"  enctype="multipart/form-data">
                         @csrf
-                        <label for="photo[title]">Title</label>
-                        <input class ='form-control' type="text" id="photo[title]" name="photo[title]" value ='{{old('photo.title')}}' required>
+                        <label for="album[title]">Title</label>
+                        <input class ='form-control' type="text" id="album[title]" name="album[title]" value ='{{old('album.title')}}' required>
                         <br>
-                        <label for="photo[description]">Description</label>
-                        <textarea type="text" class="form-control" id="photo[description]" name="photo[description]" required>{{old('photo.description')}}</textarea>
+                        <label for="album[description]">Description</label>
+                        <textarea type="text" class="form-control" id="album[description]" name="album[description]" required>{{old('album.description')}}</textarea>
                         <br>
 
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="photo[file]" name="photo[file]">
-                            <label class="custom-file-label" for="photo[file]">Choose photo</label>
-                        </div>
-                        <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

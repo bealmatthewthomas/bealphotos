@@ -6,27 +6,26 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="flex-center position-ref full-height">
-                        <h1>Photos</h1>
+                        <div class="text-center">
+                            <h2>Albums</h2>
+                            <a href="{{route('album_create')}}">Create new Album</a>
+                        </div>
                         @if(!empty(session('message')))
                             <p>{{session('message')}}</p>
                         @endif
-                        @foreach($viewdata['models']['photos'] as $photo)
-                            <h3>{{$photo->title}}</h3>
-                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
-                            <p>{{$photo->description}}</p>
-                            <p>{{$photo->user()->first()->name}}</p>
-                            <p>Uploaded: {{$photo->created_at}}</p>
-                            <a href="{{route('photo_view', ['photo_id' => $photo->id])}}">View</a>
-                            @if(!empty($viewdata['models']['user']->id))
-                                @if($viewdata['policies']['photo']->delete($viewdata['models']['user'],$photo))
-                                    <form action="{{ route('photo_delete', ['photo_id' => $photo->id]) }}" method="POST" onsubmit="return confirm('Delete photo: {{ $photo->name }}?');">
-                                        @csrf
-                                        <input class = 'btn btn-danger' type="submit" value="Delete">
-                                    </form>
-                                @endif
-                            @endif
-                            <hr>
-                        @endforeach
+                        <div class="row">
+                            @foreach($viewdata['models']['albums'] as $album)
+                                <div class="col-md-6 col-sm-12">
+                                    <h3>{{$album->title}}</h3>
+                                    @foreach($album->photos()->first(4) as $photo)
+                                        <div class="col-md-6">
+                                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$viewdata['models']['photo']->url}}"></p>
+                                        </div>
+                                    @endforeach
+                                    <a href="{{route('album_view', ['album_id' => $album->id])}}">View</a>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
