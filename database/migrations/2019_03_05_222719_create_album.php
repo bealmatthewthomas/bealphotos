@@ -16,8 +16,6 @@ class CreateAlbum extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->unsignedInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->text('description');
             $table->timestamps();
         });

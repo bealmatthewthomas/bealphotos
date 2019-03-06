@@ -10,7 +10,6 @@
                         <h3>{{$viewdata['models']['album']->title}}</h3>
                         <p><img class="img-fluid" src="https://s3.amazonaws.com/bealalbums/{{$viewdata['models']['album']->url}}"></p>
                         <p>{{$viewdata['models']['album']->description}}</p>
-                        <p>{{$viewdata['models']['album']->user()->first()->name}}</p>
                         <p>Uploaded: {{$viewdata['models']['album']->created_at}}</p>
 
                         <hr>

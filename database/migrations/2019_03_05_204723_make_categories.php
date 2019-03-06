@@ -18,6 +18,7 @@ class MakeCategories extends Migration
             $table->string('title');
             $table->timestamps();
         });
+        \App\Category::create(array('title' =>'Vacations'));
     }
 
     /**

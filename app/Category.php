@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     //
-    protected $fillable = array('name');
+    protected $fillable = array('title');
+
+    public function albums()
+    {
+        $this->belongsToMany('App\Album', 'album_category');
+    }
 }

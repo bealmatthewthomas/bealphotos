@@ -14,4 +14,9 @@ class Album extends Model
         $this->belongsToMany('App\Photo', 'album_photo');
     }
 
+    public function categories()
+    {
+        $this->belongsToMany('App\Category', 'album_category');
+    }
+
 }

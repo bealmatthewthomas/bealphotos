@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Album;
+use App\Category;
 use App\Http\Requests\StoreAlbum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,8 @@ class AlbumsController extends Controller
                 'albums' => $albums,
             ],
         ];
+        dd($viewdata['models']['albums'][0]->photos());
+
         return view('albums.index', ['viewdata' => $viewdata]);
     }
 
@@ -31,8 +34,9 @@ class AlbumsController extends Controller
      */
     public function create()
     {
-
-        return view('albums.create');
+        $categories = Category::all();
+        $viewdata['models']['categories'] = $categories;
+        return view('albums.create', ['viewdata' => $viewdata]);
     }
 
     /**
@@ -44,21 +48,14 @@ class AlbumsController extends Controller
     {
         $validated = $request->validated();
 
-        //get file
-        $image = $request->file('album.file');
-
-        //create new album with album input
+        //create new album with album input, and attach chosen category
         $album = new Album($request->input('album'));
 
-        //get logged in user
-        $user = Auth::user();
-
-        $album->user_id = $user->id;
-
-        $storagePath = Storage::disk('s3')->put("albums", $image, 'public');
-        $album->setAttribute('url', $storagePath);
         $album->save();
 
+        if(!empty($request->input('category.id'))) {
+            $album->categories()->attach($request->input('category.id'));
+        }
 
         return redirect(route('albums_index'));
     }
@@ -85,32 +82,5 @@ class AlbumsController extends Controller
             ],
         ];
         return view('albums.view', ['viewdata' => $viewdata]);
-    }
-
-    /**
-     * @author mattbeal
-     * @param int $album_id
-     * @throws \Exception
-     * @return RedirectResponse
-     */
-    public function delete(int $album_id)
-    {
-        /** @var Album $album */
-        $album = Album::find($album_id);
-        $user = Auth::user();
-
-        $album_policy = new AlbumPolicy();
-        if(!$album_policy->delete($user,$album)) {
-            return redirect(route('albums_index'))
-                ->with('message', 'You do not have permission to delete.');
-        }
-
-        //first delete from s3, then remove from db
-        //
-        $delete_true = Storage::disk('s3')->delete($album->url);
-        $album->delete();
-
-        return redirect(route('albums_index'))
-            ->with('message', 'Album '.$album->name.' Deleted');
     }
 }

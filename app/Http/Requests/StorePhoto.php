@@ -16,8 +16,9 @@ class StorePhoto extends FormRequest
         return [
             //
             'photo.title' => 'required|string|max:30',
-            'photo.description' => 'required|string|max:255',
+            'photo.description' => 'string|max:255|nullable',
             'photo.file' => 'required|image',
+            'album.id' => 'int',
         ];
     }
 }

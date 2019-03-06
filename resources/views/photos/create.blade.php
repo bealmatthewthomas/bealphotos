@@ -20,7 +20,7 @@
                         <input class ='form-control' type="text" id="photo[title]" name="photo[title]" value ='{{old('photo.title')}}' required>
                         <br>
                         <label for="photo[description]">Description</label>
-                        <textarea type="text" class="form-control" id="photo[description]" name="photo[description]" required>{{old('photo.description')}}</textarea>
+                        <textarea type="text" class="form-control" id="photo[description]" name="photo[description]">{{old('photo.description')}}</textarea>
                         <br>
 
                         <div class="custom-file">
@@ -28,6 +28,13 @@
                             <label class="custom-file-label" for="photo[file]">Choose photo</label>
                         </div>
                         <br>
+                        <label for="album[id]">Choose an Album</label>
+                        <select class='form-control' id="album[id]" name="album[id]">
+                            <option value="">No Album</option>
+                            @foreach($viewdata['models']['albums'] as $album)
+                                <option value="{{$album->id}}">{{$album->title}}</option>
+                            @endforeach
+                        </select>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
