@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
 use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
@@ -45,9 +46,28 @@ class PhotosController extends Controller
      * @author mattbeal
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(int $album_id = null)
     {
-        return view('photos.create');
+        if(!empty($album_id)) {
+            $albums = Album::find($album_id);
+            $default = true;
+        } else {
+            $albums = Album::all();
+            $default = false;
+        }
+
+        $viewdata = [
+            'models' => [
+                'albums' => $albums,
+            ],
+            'data' => [
+                'album_default' => $default,
+            ],
+        ];
+        $viewdata['models']['albums'] = $albums;
+
+
+        return view('photos.create', ['viewdata' => $viewdata]);
     }
 
     /**
@@ -74,6 +94,11 @@ class PhotosController extends Controller
         $photo->setAttribute('url', $storagePath);
         $photo->save();
 
+        //assocaite album if user chose one
+        //
+        if(!empty($request->input('album.id'))) {
+            $photo->albums()->attach($request->input('album.id'));
+        }
 
         return redirect(route('photos_index'));
     }

@@ -13,4 +13,9 @@ class Photo extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function albums()
+    {
+        return $this->belongsToMany('App\Album','album_photo');
+    }
 }
