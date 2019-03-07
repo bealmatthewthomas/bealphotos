@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Album;
 use App\Category;
 use App\Http\Requests\StoreAlbum;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class AlbumsController extends Controller
 {
@@ -23,7 +21,6 @@ class AlbumsController extends Controller
                 'albums' => $albums,
             ],
         ];
-        dd($viewdata['models']['albums'][0]->photos());
 
         return view('albums.index', ['viewdata' => $viewdata]);
     }
@@ -70,17 +67,14 @@ class AlbumsController extends Controller
         //find album by id and return
         $album = Album::find($album_id);
         $user = Auth::user();
-        $album_policy = new AlbumPolicy();
 
         $viewdata = [
             'models' => [
                 'user' => $user,
                 'album' => $album,
             ],
-            'policies' => [
-                'album' => $album_policy,
-            ],
         ];
+
         return view('albums.view', ['viewdata' => $viewdata]);
     }
 }

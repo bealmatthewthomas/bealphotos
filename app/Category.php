@@ -11,6 +11,6 @@ class Category extends Model
 
     public function albums()
     {
-        $this->belongsToMany('App\Album', 'album_category');
+        return $this->belongsToMany('App\Album', 'album_category');
     }
 }

@@ -11,12 +11,12 @@ class Album extends Model
 
     public function photos()
     {
-        $this->belongsToMany('App\Photo', 'album_photo');
+        return $this->belongsToMany('App\Photo', 'album_photo');
     }
 
     public function categories()
     {
-        $this->belongsToMany('App\Category', 'album_category');
+        return $this->belongsToMany('App\Category', 'album_category');
     }
 
 }
