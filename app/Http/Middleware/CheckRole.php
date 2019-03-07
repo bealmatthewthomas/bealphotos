@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
@@ -11,10 +12,18 @@ class CheckRole
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param   string $role_title
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $role_title)
     {
+
+        if(!$request->user()->roles()->where('title',$role_title)->get()) {
+            return redirect()
+                ->back()
+                ->with('message','Invalid Roles');
+        }
+
         return $next($request);
     }
 }
