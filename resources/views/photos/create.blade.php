@@ -14,6 +14,7 @@
                             </div>
                         @endif
                     </div>
+                    <h2 class="text-center">Create a Photo</h2>
                     <form action="{{route('photo_store')}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <label for="photo[title]">Title</label>
@@ -29,8 +30,8 @@
                         </div>
                         <br>
                         <label for="album[id]">Choose an Album</label>
-                        <select class='form-control' id="album[id]" name="album[id]">
-                            <option value="">No Album</option>
+                        <select class='form-control' id="album[id]" name="album[id]" @if($viewdata['data']['album_default']) disabled @endif>
+                            @if($viewdata['data']['album_default'])<option value="">No Album</option>@endif
                             @foreach($viewdata['models']['albums'] as $album)
                                 <option value="{{$album->id}}">{{$album->title}}</option>
                             @endforeach

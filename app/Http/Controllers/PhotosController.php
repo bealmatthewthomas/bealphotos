@@ -46,10 +46,26 @@ class PhotosController extends Controller
      * @author mattbeal
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(int $album_id = null)
     {
-        $albums = Album::all();
+        if(!empty($album_id)) {
+            $albums = Album::find($album_id);
+            $default = true;
+        } else {
+            $albums = Album::all();
+            $default = false;
+        }
+
+        $viewdata = [
+            'models' => [
+                'albums' => $albums,
+            ],
+            'data' => [
+                'album_default' => $default,
+            ],
+        ];
         $viewdata['models']['albums'] = $albums;
+
 
         return view('photos.create', ['viewdata' => $viewdata]);
     }

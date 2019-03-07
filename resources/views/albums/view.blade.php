@@ -6,9 +6,12 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="flex-center position-ref full-height">
-                        <h1>Photos</h1>
-                        <h3>{{$viewdata['models']['album']->title}}</h3>
-                        <p>{{$viewdata['models']['album']->description}}</p>
+                        <div class="text-center">
+                            <h1>Photos</h1>
+                            <h3>{{$viewdata['models']['album']->title}}</h3>
+                            <p>{{$viewdata['models']['album']->description}}</p>
+                            <a href="{{route('photo_create', ['album_id' => $viewdata['models']['album']->id])}}">Add a Photo to this Album</a>
+                        </div>
                         @foreach($viewdata['models']['album']->photos()->get() as $photo)
                             <h3>{{$photo->title}}</h3>
                             <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>

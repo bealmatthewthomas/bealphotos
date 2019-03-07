@@ -17,11 +17,14 @@
                             @foreach($viewdata['models']['albums'] as $album)
                                 <div class="col-md-6 col-sm-12">
                                     <h3 class="text-center">{{$album->title}}</h3>
-                                    @foreach($album->photos()->take(4)->get() as $photo)
-                                        <div class="col-md-6">
-                                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
-                                        </div>
-                                    @endforeach
+                                    <div class="row">
+                                        @foreach($album->photos()->take(4)->get() as $photo)
+                                            <div class="col-md-6">
+                                                <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
                                     <a href="{{route('album_view', ['album_id' => $album->id])}}">View</a>
                                 </div>
                             @endforeach
