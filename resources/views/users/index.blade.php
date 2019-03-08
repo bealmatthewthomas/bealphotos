@@ -10,10 +10,11 @@
                         @if(!empty(session('message')))
                             <p>{{session('message')}}</p>
                         @endif
+                        <a href="{{route('user_create')}}">Create a User</a>
                         @foreach($viewdata['models']['users'] as $user)
                             <h3>{{$user->name}}</h3>
-                            <p>{{$user->username}}</p>
-                            <a href="{{route('user_view')}}">View</a>
+                            <p>{{$user->email}}</p>
+                            <a href="{{route('user_view', ['user_id' => $user->id])}}">Edit</a>
                         @endforeach
                     </div>
                 </div>

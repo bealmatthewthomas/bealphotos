@@ -17,13 +17,12 @@
                     <h2 class="text-center">Create New User</h2>
                     <form action="{{route('user_store')}}" method="POST"  enctype="multipart/form-data">
                         @csrf
-                        <label for="user[title]">Title</label>
-                        <input class ='form-control' type="text" id="user[title]" name="user[title]" value ='{{old('user.title')}}' required>
+                        <label for="user[name]">Name</label>
+                        <input class ='form-control' type="text" id="user[name]" name="user[name]" value ='{{old('user.name')}}' required>
                         <br>
-                        <label for="user[description]">Description</label>
-                        <textarea type="text" class="form-control" id="user[description]" name="user[description]" required>{{old('user.description')}}</textarea>
+                        <label for="user[email]">Email</label>
+                        <input type="text" class="form-control" id="user[email]" name="user[email]" value ='{{old('user.email')}}' required>
                         <br>
-
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

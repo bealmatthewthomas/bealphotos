@@ -10,7 +10,7 @@
                             <h2>Welcome to the Admin Portal!</h2>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{route('users_index')}}"
+                                    <a href="{{route('users_index')}}">User Management</a>
                                 </div>
                             </div>
                         </div>

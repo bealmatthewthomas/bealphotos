@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUser;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +15,11 @@ class UsersController extends Controller
     {
         //
         $users = User::all();
-        $user = Auth::user();
+        $admin = Auth::user();
 
         $viewdata = [
             'models' => [
-                'user' => $user,
+                'user' => $admin,
                 'users' => $users,
             ],
         ];
@@ -32,7 +33,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $viewdata['models']['categories'] = $categories;
+        $roles = Role::all();
+        $viewdata['models']['categories'] = $roles;
         return view('users.create', ['viewdata' => $viewdata]);
     }
 
@@ -48,11 +50,16 @@ class UsersController extends Controller
         //create new user with user input, and attach chosen category
         $user = new User($request->input('user'));
 
-        if(!empty($request->input('user.roles'))) {
-            foreach()
-        }
+        //set default password
+        $user->setAttribute('password', bcrypt('Bealfun22'));
 
         $user->save();
+
+        if(!empty($request->input('user.roles'))) {
+            foreach($request->input('user.roles') as $role_id) {
+                $user->attach($role_id);
+            }
+        }
 
         return redirect(route('users_index'));
     }
@@ -66,15 +73,37 @@ class UsersController extends Controller
     {
         //find user by id and return
         $user = User::find($user_id);
-        $user = Auth::user();
+        $admin = Auth::user();
+
+        $roles = Role::all();
+
+        $roles_index = [];
+        foreach($roles as $role) {
+            if(!empty($user()->roles()->where('title',$role->title)->first())) {
+                $roles_index[$role] = true;
+            }
+            else {
+                $roles_index[$role] = false;
+            }
+        }
 
         $viewdata = [
             'models' => [
-                'user' => $user,
+                'admin' => $admin,
                 'user' => $user,
             ],
         ];
 
         return view('users.view', ['viewdata' => $viewdata]);
+    }
+
+    /**
+     * @author mattbeal
+     * @param Request $request
+     * @param int $user_id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function edit(Request $request, int $user_id)
+    {
     }
 }
