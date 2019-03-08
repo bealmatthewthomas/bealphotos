@@ -17,8 +17,7 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role_title)
     {
-
-        if(!$request->user()->roles()->where('title',$role_title)->get()) {
+        if(empty($request->user()->roles()->where('title',$role_title)->first())) {
             return redirect()
                 ->back()
                 ->with('message','Invalid Roles');

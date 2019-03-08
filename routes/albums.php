@@ -10,10 +10,11 @@ Route::get('/albums', 'AlbumsController@index')
     ->name('albums_index');
 
 Route::get('/album/create', 'AlbumsController@create')
-    ->middleware('auth')
+    ->middleware('auth','check_role:album')
     ->name('album_create');
 
 Route::post('/album/create', 'AlbumsController@store')
+    ->middleware('auth','check_role:album')
     ->name('album_store');
 
 Route::get('/album/view/{album_id}', 'AlbumsController@view')
