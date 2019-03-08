@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="flex-center position-ref full-height">
-                        <h1>Photos</h1>
+                        <h1>Photo</h1>
                         <h3>{{$viewdata['models']['photo']->title}}</h3>
                         <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$viewdata['models']['photo']->url}}"></p>
                         <p>{{$viewdata['models']['photo']->description}}</p>

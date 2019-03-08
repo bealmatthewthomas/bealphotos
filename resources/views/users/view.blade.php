@@ -7,13 +7,13 @@
                 <div class="card">
                     <div class="flex-center position-ref full-height">
                         <div class="text-center">
-                            <h2>Welcome to the Admin Portal!</h2>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="{{route('users_index')}}"
-                                </div>
-                            </div>
+                            <h1>User</h1>
+                            <h3>{{$viewdata['models']['user']->name}}</h3>
+                            <p>{{$viewdata['models']['user']->username}}</p>
+                            <a href="{{route('user_edit', [])}}"
                         </div>
+
+                        <hr>
                     </div>
                 </div>
             </div>
