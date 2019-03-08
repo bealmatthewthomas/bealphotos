@@ -69,7 +69,7 @@ class UsersController extends Controller
      * @param int $user_id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function view(int $user_id)
+    public function edit(int $user_id)
     {
         //find user by id and return
         $user = User::find($user_id);
@@ -79,12 +79,14 @@ class UsersController extends Controller
 
         $roles_index = [];
         foreach($roles as $role) {
-            if(!empty($user()->roles()->where('title',$role->title)->first())) {
-                $roles_index[$role] = true;
+            if(!empty($user->roles()->where('title',$role->title)->first())) {
+                $role->user_has_role = true;
             }
             else {
-                $roles_index[$role] = false;
+                $role->user_has_role = false;
             }
+            $roles_index[] = $role;
+
         }
 
         $viewdata = [
@@ -92,9 +94,12 @@ class UsersController extends Controller
                 'admin' => $admin,
                 'user' => $user,
             ],
+            'data' => [
+                'roles' => $roles_index,
+            ]
         ];
 
-        return view('users.view', ['viewdata' => $viewdata]);
+        return view('users.edit', ['viewdata' => $viewdata]);
     }
 
     /**
@@ -103,7 +108,26 @@ class UsersController extends Controller
      * @param int $user_id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function edit(Request $request, int $user_id)
+    public function save(Request $request, int $user_id)
     {
+        $request_array = $request->input();
+        $user = User::find($user_id);
+
+        if(empty($request->input('user.password'))) {
+            $request_array['user']['password'] = $user->password;
+        }
+        else {
+            $request_array['user']['password'] = bcrypt($request_array['user']['password']);
+        }
+
+        //save dm
+        $user->save();
+
+        foreach($request_array['roles'] as $role_id) {
+            $user->roles()->sync($role_id);
+        }
+
+        return redirect(route('users_index'))
+            ->with('message', ('User updated sucessfully'));
     }
 }

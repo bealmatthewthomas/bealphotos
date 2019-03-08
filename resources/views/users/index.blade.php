@@ -14,7 +14,7 @@
                         @foreach($viewdata['models']['users'] as $user)
                             <h3>{{$user->name}}</h3>
                             <p>{{$user->email}}</p>
-                            <a href="{{route('user_view', ['user_id' => $user->id])}}">Edit</a>
+                            <a href="{{route('user_edit', ['user_id' => $user->id])}}">Edit</a>
                         @endforeach
                     </div>
                 </div>
