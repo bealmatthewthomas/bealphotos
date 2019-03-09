@@ -32,7 +32,7 @@
                                 <h3 class="text-center">Take a look at the newest photos!</h3>
 
                                 @foreach($viewdata['models']['photos'] as $photo)
-                                    <h3 class="text-center">{{$album->title}}</h3>
+                                    <h3 class="text-center">{{$photo->title}}</h3>
                                     <a href="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></a>
                                 @endforeach
                             </div>
