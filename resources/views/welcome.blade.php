@@ -13,9 +13,10 @@
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <h3 class="text-center">Take a look at our albums!</h3>
+
                                 @foreach($viewdata['models']['albums'] as $album)
+                                    <h3 class="text-center">{{$album->title}}</h3>
                                     <div class="col-md-6 col-sm-12">
-                                        <h3 class="text-center">{{$album->title}}</h3>
                                         <div class="row">
                                             @foreach($album->photos()->take(4)->get() as $photo)
                                                 <div class="col-md-6">
@@ -24,8 +25,16 @@
                                             @endforeach
                                         </div>
 
-                                        <a href="{{route('album_view', ['album_id' => $album->id])}}">View</a>
+                                        <a class='text-center' href="{{route('album_view', ['album_id' => $album->id])}}">View</a>
                                     </div>
+                                @endforeach
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h3 class="text-center">Take a look at the newest photos!</h3>
+
+                                @foreach($viewdata['models']['photos'] as $photo)
+                                    <h3 class="text-center">{{$album->title}}</h3>
+                                    <a href="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></a>
                                 @endforeach
                             </div>
                         </div>
