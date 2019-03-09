@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        \App\User::create(array('name' => 'Matthew', 'email' => 'ohno21212@gmail.com', 'password' => bcrypt('root')));
     }
 
     /**

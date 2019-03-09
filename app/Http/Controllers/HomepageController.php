@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
+use App\Photo;
 use Illuminate\Http\Request;
 
 /**
@@ -17,6 +19,15 @@ class HomepageController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $photos = Photo::first(10);
+        $albums = Album::first(4);
+
+        $viewdata = [
+            'models' => [
+              'users' => $photos,
+              'albums' => $albums,
+            ],
+        ];
+        return view('welcome', ['viewdata' => $viewdata]);
     }
 }

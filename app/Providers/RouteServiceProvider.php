@@ -61,6 +61,12 @@ class RouteServiceProvider extends ServiceProvider
             // Albums routes.
             require base_path('routes/albums.php');
 
+            // Admin routes.
+            require base_path('routes/admin.php');
+
+            // User routes.
+            require base_path('routes/users.php');
+
             // Web routes.
             require base_path('routes/web.php');
         });

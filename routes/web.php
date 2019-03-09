@@ -14,7 +14,6 @@
 Route::get('/', 'HomepageController@index')
     ->name('welcome');
 
-Route::get('test', 'S3TestController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')
