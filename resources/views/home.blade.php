@@ -19,11 +19,12 @@
                             <h2>Welcome {{$viewdata['models']['user']->name}}</h2>
                             @if(empty($viewdata['models']['user']->photos()->first()))
                                 <p>You don't have any photos!</p>
-                                <a href="{{route('photo_create')}}">Upload One?</a>
                             @else
                                 <p>Here are your photos</p>
                             @endif
-                            @foreach($viewdata['models']['user']->photos()->get() as $photo)
+                            <a href="{{route('photo_create')}}">Upload a Photo!</a>
+
+                        @foreach($viewdata['models']['user']->photos()->get() as $photo)
                                 <p>{{$photo->title}}</p>
                                 <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
                             @endforeach
