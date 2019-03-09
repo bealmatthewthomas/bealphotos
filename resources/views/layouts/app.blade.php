@@ -38,8 +38,6 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('photos_index')}}">View All Photos</a>
                                 <a class="dropdown-item" href="{{route('photo_create')}}">Create New Photo</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -49,8 +47,6 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('albums_index')}}">View All Albums</a>
                                 <a class="dropdown-item" href="{{route('album_create')}}">Create New Album</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
                     </ul>

@@ -33,7 +33,7 @@ class PhotosController extends Controller
         $viewdata = [
             'models' => [
                 'user' => $user,
-                'photos' => $photos,
+                'photos' => $photos->sortByDesc('created_at'),
             ],
             'policies' => [
                 'photo' => $photo_policy,

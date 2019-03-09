@@ -18,7 +18,7 @@ class AlbumsController extends Controller
         $viewdata = [
             'models' => [
                 'user' => $user,
-                'albums' => $albums,
+                'albums' => $albums->sortByDesc('created_at'),
             ],
         ];
 
