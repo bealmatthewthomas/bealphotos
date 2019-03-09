@@ -23,8 +23,8 @@ class HomepageController extends Controller
 
         $viewdata = [
             'models' => [
-              'photos' => $photos,
-              'albums' => $albums,
+              'photos' => $photos->sortByDesc('created_at'),
+              'albums' => $albums->sortByDesc('created_at'),
             ],
         ];
         return view('welcome', ['viewdata' => $viewdata]);
