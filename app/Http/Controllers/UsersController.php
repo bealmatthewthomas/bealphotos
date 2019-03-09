@@ -112,6 +112,7 @@ class UsersController extends Controller
     {
         $request_array = $request->input();
         $user = User::find($user_id);
+        dd($request_array);
 
         if(empty($request->input('user.password'))) {
             $request_array['user']['password'] = $user->password;
@@ -123,9 +124,8 @@ class UsersController extends Controller
         //save dm
         $user->save();
 
-        foreach($request_array['roles'] as $role_id) {
-            $user->roles()->sync($role_id);
-        }
+        $user->roles()->sync($request_array['roles']);
+
 
         return redirect(route('users_index'))
             ->with('message', ('User updated sucessfully'));

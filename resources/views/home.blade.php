@@ -14,7 +14,15 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h2>Welcome {{$viewdata['models']['user']->name}}</h2>
+                            <p>Here are your photos</p>
+                            @foreach($viewdata['models']['user']->photos()->all() as $photo)
+                                    
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

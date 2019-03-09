@@ -21,12 +21,20 @@
                                 <label for="user[password]">Password (leave empty for no change)</label>
                                 <input class ='form-control' id="user[password]" name="user[password]" value="">
 
-                                <label for="roles[id]">Roles</label>
-                                <select multiple class ='form-control' id="roles[id]" name="roles[id]">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2 for="roles[id]">Roles</h2>
+
+                                    </div>
                                     @foreach($viewdata['data']['roles'] as $role)
-                                        <option value="{{$role->id}}" @if($role->user_has_role) selected @endif>{{$role->title}}</option>
+                                        <div class="col-md-6">
+                                            <label for="roles[ids][{{$role->id}}]">{{$role->title}}</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class='form-control' id ='roles[ids]' name=roles[ids][{{$role->id}}] type="checkbox" value="{{$role->id}}" @if($role->user_has_role) checked @endif>
+                                        </div>
                                     @endforeach
-                                </select>
+                                </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>
