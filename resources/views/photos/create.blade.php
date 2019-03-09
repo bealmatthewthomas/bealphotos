@@ -37,6 +37,10 @@
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-primary">Submit</button>
+
+                        @foreach($viewdata['models']['tags'] as $tag)
+                            <input type="checkbox" id="tags[ids][]" value="{{$tag->id}}">
+                        @endforeach
                     </form>
                 </div>
             </div>

@@ -18,4 +18,9 @@ class Photo extends Model
     {
         return $this->belongsToMany('App\Album','album_photo');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
 }

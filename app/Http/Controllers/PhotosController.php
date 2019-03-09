@@ -6,6 +6,7 @@ use App\Album;
 use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
+use App\Tag;
 use App\UserPhoto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -56,9 +57,12 @@ class PhotosController extends Controller
             $default = false;
         }
 
+        $tags = Tag::all();
+
         $viewdata = [
             'models' => [
                 'albums' => $albums,
+                'tags' => $tags,
             ],
             'data' => [
                 'album_default' => $default,
@@ -125,6 +129,10 @@ class PhotosController extends Controller
             ],
         ];
         return view('photos.view', ['viewdata' => $viewdata]);
+    }
+
+    public function edit(int $photo_id) {
+
     }
 
     /**
