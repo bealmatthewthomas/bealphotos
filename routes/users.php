@@ -18,13 +18,13 @@ Route::post('/user/create', 'UsersController@store')
     ->middleware('auth','check_role:admin')
     ->name('user_store');
 
-Route::get('/user/view/{user_id}', 'UsersController@view')
-    ->middleware('auth','check_role:admin')
-    ->name('user_view');
-
-Route::post('user/edit/{user_id}', 'UsersController@edit')
+Route::get('/user/edit/{user_id}', 'UsersController@edit')
     ->middleware('auth','check_role:admin')
     ->name('user_edit');
+
+Route::post('user/save/{user_id}', 'UsersController@save')
+    ->middleware('auth','check_role:admin')
+    ->name('user_save');
 
 Route::post('user/delete/{user_id}', 'UsersController@delete')
     ->middleware('auth','check_role:admin')

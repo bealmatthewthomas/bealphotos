@@ -14,7 +14,7 @@
                         </div>
                         @foreach($viewdata['models']['album']->photos()->get() as $photo)
                             <h3>{{$photo->title}}</h3>
-                            <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
+                            <a href="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></a>
                             <p>{{$photo->description}}</p>
                             <p>{{$photo->user()->first()->name}}</p>
                             <p>Uploaded: {{$photo->created_at}}</p>
