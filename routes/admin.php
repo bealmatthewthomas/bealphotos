@@ -7,5 +7,5 @@
  */
 
 Route::get('admin', 'AdminController@view')
-    ->middleware('check_role:admin')
+    ->middleware('auth','check_role:admin')
     ->name('view_admin_portal');

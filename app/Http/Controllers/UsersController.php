@@ -112,7 +112,6 @@ class UsersController extends Controller
     {
         $request_array = $request->input();
         $user = User::find($user_id);
-        dd($request_array);
 
         if(empty($request->input('user.password'))) {
             $request_array['user']['password'] = $user->password;
@@ -121,10 +120,17 @@ class UsersController extends Controller
             $request_array['user']['password'] = bcrypt($request_array['user']['password']);
         }
 
+        $user->setAttribute('password', $request_array['user']['password']);
+
         //save dm
         $user->save();
 
-        $user->roles()->sync($request_array['roles']);
+        //detach roles
+        $user->roles()->detach();
+
+        foreach($request_array['roles'] as $key => $value) {
+            $user->roles()->attach($value);
+        }
 
 
         return redirect(route('users_index'))

@@ -28,10 +28,10 @@
                                     </div>
                                     @foreach($viewdata['data']['roles'] as $role)
                                         <div class="col-md-6">
-                                            <label for="roles[ids][{{$role->id}}]">{{$role->title}}</label>
+                                            <label for="roles[ids][]">{{$role->title}}</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <input class='form-control' id ='roles[ids]' name=roles[ids][{{$role->id}}] type="checkbox" value="{{$role->id}}" @if($role->user_has_role) checked @endif>
+                                            <input class='form-control' id ='roles[ids][]' name=roles[ids][] type="checkbox" value="{{$role->id}}" @if($role->user_has_role) checked @endif>
                                         </div>
                                     @endforeach
                                 </div>
