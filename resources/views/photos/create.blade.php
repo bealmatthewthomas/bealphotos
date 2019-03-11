@@ -18,7 +18,7 @@
                     <form action="{{route('photo_store')}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <label for="photo[title]">Title</label>
-                        <input class ='form-control' type="text" id="photo[title]" name="photo[title]" value ='{{old('photo.title')}}' required>
+                        <input class ='form-control' type="text" id="photo[title]" name="photo[title]" value ='{{old('photo.title')}}' >
                         <br>
                         <label for="photo[description]">Description</label>
                         <textarea type="text" class="form-control" id="photo[description]" name="photo[description]">{{old('photo.description')}}</textarea>
