@@ -83,7 +83,12 @@ class PhotosController extends Controller
         $image = $request->file('photo.file');
 
         //create new photo with photo input
-        $photo = new Photo($request->input('photo'));
+        if(!empty($request->input('photo'))) {
+            $photo = new Photo($request->input('photo'));
+        }
+        else {
+            $photo = new Photo();
+        }
 
         //get logged in user
         $user = Auth::user();
@@ -98,6 +103,9 @@ class PhotosController extends Controller
         //
         if(!empty($request->input('album.id'))) {
             $photo->albums()->attach($request->input('album.id'));
+        }
+        else {
+            $photo->albums()->attach($request->input());
         }
 
         return redirect(route('photos_index'));

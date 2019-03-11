@@ -15,7 +15,7 @@ class StorePhoto extends FormRequest
     {
         return [
             //
-            'photo.title' => 'required|string|max:30',
+            'photo.title' => 'string|max:30|nullable',
             'photo.description' => 'string|max:255|nullable',
             'photo.file' => 'required|image',
             'album.id' => 'int',
