@@ -105,7 +105,7 @@ class PhotosController extends Controller
             $photo->albums()->attach($request->input('album.id'));
         }
         else {
-            $photo->albums()->attach($request->input());
+            $photo->albums()->attach(2);
         }
 
         return redirect(route('photos_index'));
