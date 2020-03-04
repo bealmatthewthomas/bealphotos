@@ -38,15 +38,6 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('photos_index')}}">View All Photos</a>
                                 <a class="dropdown-item" href="{{route('photo_create')}}">Create New Photo</a>
-                                <form method="POST" action="{{route('photo_store')}}" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="photo[file]" name="photo[file]">
-                                        <label class="custom-file-label" for="photo[file]">Choose photo</label>
-                                    </div>
-                                    <button type='submit' class="dropdown-item">Quick Create Whistler 2019 Photo</button>
-                                </form>
-
                             </div>
                         </li>
                         <li class="nav-item dropdown">

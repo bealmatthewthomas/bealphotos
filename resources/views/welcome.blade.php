@@ -33,7 +33,7 @@
 
                                 @foreach($viewdata['models']['photos'] as $photo)
                                     <h3 class="text-center">{{$photo->title}}</h3>
-                                    <a href="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></a>
+                                    <a href="{{route('photo_view', ['photo_id' => $photo->id])}}"><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></a>
                                 @endforeach
                             </div>
                         </div>

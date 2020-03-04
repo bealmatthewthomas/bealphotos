@@ -7,6 +7,7 @@ use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
 use App\UserPhoto;
+use Faker\Provider\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,8 @@ class PhotosController extends Controller
         else {
             $photo = new Photo();
         }
+dump($image);
+        dd(exif_read_data($image));
 
         //get logged in user
         $user = Auth::user();
