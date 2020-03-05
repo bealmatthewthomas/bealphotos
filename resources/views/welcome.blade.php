@@ -20,7 +20,7 @@
                                     <div class="row">
                                         @foreach($album->photos()->take(4)->get() as $photo)
                                             <div class="col-md-6">
-                                                <p><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></p>
+                                                <p><a href="{{route('photo_view', ['photo_id' => $photo->id])}}"><img class="img-fluid" src="https://s3.amazonaws.com/bealphotos/{{$photo->url}}"></a></p>
                                             </div>
                                         @endforeach
                                     </div>

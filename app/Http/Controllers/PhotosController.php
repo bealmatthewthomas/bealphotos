@@ -7,11 +7,12 @@ use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
 use App\UserPhoto;
-use Faker\Provider\Image;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Image as InterventionImage;
 
 /**
  * Class PhotosController
@@ -80,9 +81,8 @@ class PhotosController extends Controller
     {
         $validated = $request->validated();
 
-        //get file
-        $image = $request->file('photo.file');
-
+        $img = Image::make($request->input('photo'));
+        dd($img);
         //create new photo with photo input
         if(!empty($request->input('photo'))) {
             $photo = new Photo($request->input('photo'));
@@ -90,8 +90,6 @@ class PhotosController extends Controller
         else {
             $photo = new Photo();
         }
-dump($image);
-        dd(exif_read_data($image));
 
         //get logged in user
         $user = Auth::user();
