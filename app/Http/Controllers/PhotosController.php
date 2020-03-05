@@ -7,6 +7,7 @@ use App\Http\Requests\StorePhoto;
 use App\Photo;
 use App\Policies\PhotoPolicy;
 use App\UserPhoto;
+use Illuminate\Support\Facades\Input;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -80,9 +81,8 @@ class PhotosController extends Controller
     public function store(StorePhoto $request)
     {
         $validated = $request->validated();
-
-        $img = Image::make($request->input('photo'));
-        dd($img);
+        $img = Image::make(Input::file('photo')['file']->getRealPath());
+        dd($img->orientate());
         //create new photo with photo input
         if(!empty($request->input('photo'))) {
             $photo = new Photo($request->input('photo'));
