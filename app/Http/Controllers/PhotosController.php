@@ -81,23 +81,32 @@ class PhotosController extends Controller
     public function store(StorePhoto $request)
     {
         $validated = $request->validated();
-        $img = Image::make(Input::file('photo')['file']->getRealPath());
-        dd($img->orientate());
         //create new photo with photo input
         if(!empty($request->input('photo'))) {
-            $photo = new Photo($request->input('photo'));
+            $img = Image::make(Input::file('photo')['file']->getRealPath())->orientate()->encode('jpg');
         }
         else {
-            $photo = new Photo();
+            throw new \Exception('No Photo Chosen');
         }
 
         //get logged in user
         $user = Auth::user();
-
+        $photo = new Photo();
         $photo->user_id = $user->id;
 
-        $storagePath = Storage::disk('s3')->put("photos", $image, 'public');
-        $photo->setAttribute('url', $storagePath);
+        //generate random file path
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 32; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $filePath = "photos/".$randomString.'.jpg';
+
+        Storage::disk('s3')->put($filePath, $img, 'public');
+
+        $photo->setAttribute('url', $filePath);
         $photo->save();
 
         //assocaite album if user chose one
