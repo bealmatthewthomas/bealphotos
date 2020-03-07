@@ -78,45 +78,47 @@ class PhotosController extends Controller
      */
     public function store(StorePhoto $request)
     {
-        $validated = $request->validated();
-        //create new photo with photo input
-        if(!empty($request->input('photo'))) {
-            $img = Image::make(Input::file('photo')['file']->getRealPath())->orientate()->encode('jpg');
+        try {
+            $validated = $request->validated();
+            //create new photo with photo input
+            if (!empty($request->input('photo'))) {
+                $img = Image::make(Input::file('photo')['file']->getRealPath())->orientate()->encode('jpg');
+            } else {
+                throw new \Exception('No Photo Chosen');
+            }
+
+            //get logged in user
+            $user = Auth::user();
+            $photo = new Photo();
+            $photo->user_id = $user->id;
+
+            //generate random file path
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < 32; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+
+            $filePath = "photos/" . $randomString . '.jpg';
+
+            Storage::disk('s3')->put($filePath, $img, 'public');
+
+            $photo->setAttribute('url', $filePath);
+            $photo->save();
+
+            //assocaite album if user chose one
+            //
+            if (!empty($request->input('album.id'))) {
+                $photo->albums()->attach($request->input('album.id'));
+            } else {
+                $photo->albums()->attach(2);
+            }
+            return redirect(route('photos_index'));
+        } catch(\Exception $e) {
+            echo $e->getMessage();
+            dd($e->getTrace());
         }
-        else {
-            throw new \Exception('No Photo Chosen');
-        }
-
-        //get logged in user
-        $user = Auth::user();
-        $photo = new Photo();
-        $photo->user_id = $user->id;
-
-        //generate random file path
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < 32; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-
-        $filePath = "photos/".$randomString.'.jpg';
-
-        Storage::disk('s3')->put($filePath, $img, 'public');
-
-        $photo->setAttribute('url', $filePath);
-        $photo->save();
-
-        //assocaite album if user chose one
-        //
-        if(!empty($request->input('album.id'))) {
-            $photo->albums()->attach($request->input('album.id'));
-        }
-        else {
-            $photo->albums()->attach(2);
-        }
-
-        return redirect(route('photos_index'));
     }
 
     /**
