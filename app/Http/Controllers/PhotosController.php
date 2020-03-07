@@ -86,10 +86,10 @@ class PhotosController extends Controller
             } else {
                 throw new \Exception('No Photo Chosen');
             }
-
+            $photo = new Photo($request->input('photo'));
             //get logged in user
             $user = Auth::user();
-            $photo = new Photo();
+            //$photo = new Photo($request->);
             $photo->user_id = $user->id;
 
             //generate random file path
