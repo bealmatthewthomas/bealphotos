@@ -53,7 +53,7 @@ class PhotosController extends Controller
             $albums = Album::find($album_id);
             $default = true;
         } else {
-            $albums = Album::all();
+            $albums = Album::all()->reverse();
             $default = false;
         }
 
